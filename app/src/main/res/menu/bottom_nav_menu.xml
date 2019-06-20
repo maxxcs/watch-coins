@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_bitcoin_brands"
+        android:title="Currencies" />
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_store_solid"
+        android:title="Marketplaces" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_bookmark_solid"
+        android:title="Favorites" />
+
+</menu>

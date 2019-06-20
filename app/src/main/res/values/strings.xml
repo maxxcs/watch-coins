@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WatchCoins</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_currencies">CurrenciesActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_currencies_details">CurrenciesDetailsActivity</string>
+    <string name="title_activity_marketplaces">MarketplacesActivity</string>
+    <string name="title_activity_marketplaces_details">MarketplacesDetailsActivity</string>
+    <string name="title_activity_favorites">FavoritesActivity</string>
+</resources>

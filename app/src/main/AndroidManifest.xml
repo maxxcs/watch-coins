@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.watchcoins">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".controllers.FavoritesActivity"
+            android:label="@string/title_activity_favorites"></activity>
+        <activity
+            android:name=".controllers.MarketplacesDetailsActivity"
+            android:label="@string/title_activity_marketplaces_details" />
+        <activity
+            android:name=".controllers.MarketplacesActivity"
+            android:label="@string/title_activity_marketplaces" />
+        <activity
+            android:name=".controllers.CurrenciesDetailsActivity"
+            android:label="@string/title_activity_currencies_details" />
+        <activity
+            android:name=".controllers.CurrenciesActivity"
+            android:label="@string/title_activity_currencies" />
+        <activity android:name=".controllers.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
