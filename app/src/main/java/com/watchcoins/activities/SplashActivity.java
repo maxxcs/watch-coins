@@ -1,11 +1,10 @@
-package com.watchcoins.controllers;
+package com.watchcoins.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,8 +19,7 @@ import com.watchcoins.R;
 public class SplashActivity extends AppCompatActivity {
 
     private Intent currencies;
-    private ImageView logoImg;
-    private TextView logo;
+    private ImageView logo;
     private TextView watch;
     private TextView coins;
 
@@ -30,12 +28,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
-        currencies = new Intent(this, CurrenciesActivity.class);
-        logoImg = findViewById(R.id.logo_img);
-        logo = findViewById(R.id.logo);
+        currencies = new Intent(this, MainActivity.class);
+        logo = findViewById(R.id.logo_img);
         watch = findViewById(R.id.watch);
         coins = findViewById(R.id.coins);
-        Picasso.get().load("").resize(512, 512).centerCrop().into(logoImg, new Callback() {
+        Picasso.get().load("").resize(512, 512).centerCrop().into(logo, new Callback() {
             @Override
             public void onSuccess() {
                 animate();
@@ -43,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onError(Exception e) {
-                Toast.makeText(SplashActivity.this, "Eita preula", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashActivity.this, "Image not found", Toast.LENGTH_SHORT).show();
                 startActivity(currencies);
                 finish();
             }
@@ -84,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(currencies);
                 finish();
             }
-        }, 4500);
+        }, 4800);
 
     }
 

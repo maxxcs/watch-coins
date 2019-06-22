@@ -12,4 +12,7 @@
     <string name="title_activity_marketplaces">MarketplacesActivity</string>
     <string name="title_activity_marketplaces_details">MarketplacesDetailsActivity</string>
     <string name="title_activity_favorites">FavoritesActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

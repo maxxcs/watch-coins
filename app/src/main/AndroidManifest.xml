@@ -11,22 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.CurrencyDetailsActivity"></activity>
+        <activity android:name=".activities.MarketplaceDetailsActivity" />
         <activity
-            android:name=".controllers.FavoritesActivity"
-            android:label="@string/title_activity_favorites"></activity>
-        <activity
-            android:name=".controllers.MarketplacesDetailsActivity"
-            android:label="@string/title_activity_marketplaces_details" />
-        <activity
-            android:name=".controllers.MarketplacesActivity"
-            android:label="@string/title_activity_marketplaces" />
-        <activity
-            android:name=".controllers.CurrenciesDetailsActivity"
-            android:label="@string/title_activity_currencies_details" />
-        <activity
-            android:name=".controllers.CurrenciesActivity"
-            android:label="@string/title_activity_currencies" />
-        <activity android:name=".controllers.SplashActivity">
+            android:name=".activities.MainActivity"
+            android:label="Watch Coins" />
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
