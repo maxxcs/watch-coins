@@ -18,7 +18,7 @@ import com.watchcoins.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private Intent currencies;
+    private Intent main;
     private ImageView logo;
     private TextView watch;
     private TextView coins;
@@ -28,23 +28,28 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
-        currencies = new Intent(this, MainActivity.class);
+        main = new Intent(this, MainActivity.class);
         logo = findViewById(R.id.logo_img);
         watch = findViewById(R.id.watch);
         coins = findViewById(R.id.coins);
-        Picasso.get().load("").resize(512, 512).centerCrop().into(logo, new Callback() {
-            @Override
-            public void onSuccess() {
-                animate();
-            }
+        Picasso.get()
+            .load("https://raw.githubusercontent.com/maxxcs/watch-coins/master/utils/bitcoin.png")
+            .resize(512, 512)
+            .centerCrop()
+            .into(logo, new Callback() {
 
-            @Override
-            public void onError(Exception e) {
-                Toast.makeText(SplashActivity.this, "Image not found", Toast.LENGTH_SHORT).show();
-                startActivity(currencies);
-                finish();
-            }
-        });
+                @Override
+                public void onSuccess() {
+                    animate();
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Toast.makeText(SplashActivity.this, "Image not found", Toast.LENGTH_SHORT).show();
+                    startActivity(main);
+                    finish();
+                }
+            });
 
     }
 
@@ -58,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
                 logo.setVisibility(View.VISIBLE);
                 logo.setAnimation(animLogo);
             }
-        }, 1000);
+        }, 200);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -66,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
                 watch.setVisibility(View.VISIBLE);
                 watch.setAnimation(animWatch);
             }
-        }, 1500);
+        }, 1200);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -74,14 +79,14 @@ public class SplashActivity extends AppCompatActivity {
                 coins.setVisibility(View.VISIBLE);
                 coins.setAnimation(animCoins);
             }
-        }, 2000);
+        }, 1700);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(currencies);
+                startActivity(main);
                 finish();
             }
-        }, 4800);
+        }, 4500);
 
     }
 

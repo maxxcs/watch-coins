@@ -1,5 +1,6 @@
 package com.watchcoins.models;
 
+import java.math.BigInteger;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,7 +12,7 @@ public class CurrenciesModel {
     private List<CurrencyModel> data = null;
     @SerializedName("timestamp")
     @Expose
-    private Integer timestamp;
+    private BigInteger timestamp;
 
     public List<CurrencyModel> getData() {
         return data;
@@ -21,11 +22,11 @@ public class CurrenciesModel {
         this.data = data;
     }
 
-    public Integer getTimestamp() {
+    public BigInteger getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Integer timestamp) {
+    public void setTimestamp(BigInteger timestamp) {
         this.timestamp = timestamp;
     }
 

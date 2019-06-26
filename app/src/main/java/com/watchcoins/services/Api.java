@@ -10,11 +10,11 @@ import retrofit2.http.GET;
 
 public interface Api {
 
-    String BASE_URL = "https://api.coincap.io/v2";
+    String BASE_URL = "https://api.coincap.io/v2/";
 
-    @GET("/assets")
-    Call<List<CurrenciesModel>> getCurrencies();
+    @GET("assets")
+    Call<CurrenciesModel> getCurrencies();
 
-    @GET("/markets")
-    Call<List<MarketsModel>> getMarkets();
+    @GET("markets")
+    Call<MarketsModel> getMarkets();
 }
