@@ -60,8 +60,7 @@ public class CurrenciesFragment extends Fragment {
             public void onResponse(Call<CurrenciesModel> call, Response<CurrenciesModel> response) {
                 data = response.body();
                 Log.i("TIMESTAMP", String.valueOf(data.getTimestamp()));
-
-                setupRecycleView();
+                 setupRecycleView();
             }
 
             @Override
@@ -80,5 +79,4 @@ public class CurrenciesFragment extends Fragment {
         adapter = new CurrenciesAdapter(data.getData());
         list.setAdapter(adapter);
     }
-
 }

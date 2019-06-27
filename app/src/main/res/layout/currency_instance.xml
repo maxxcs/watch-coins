@@ -1,12 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coin_ref_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginBottom="5dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/currency_name"
+    <ImageView
+        android:id="@+id/coin_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dogcoin" />
+        android:padding="5dp"
+        app:srcCompat="@drawable/ic_bitcoin_brands" />
+
+    <TextView
+        android:id="@+id/coin_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="160dp"
+        android:padding="5dp"
+        android:shadowColor="#000"
+        android:text="Dogcoin"
+        android:textAlignment="textStart"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/coin_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="110dp"
+        android:padding="5dp"
+        android:text="U$3000,00"
+        android:textAlignment="textStart"
+        android:textSize="16dp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/coin_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="90dp"
+        android:padding="5dp"
+        android:text="8,35%"
+        android:textAlignment="textEnd"
+        android:textSize="16dp" />
 </LinearLayout>
