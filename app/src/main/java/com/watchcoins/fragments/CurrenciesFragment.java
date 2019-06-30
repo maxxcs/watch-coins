@@ -19,6 +19,8 @@ import com.watchcoins.models.CurrenciesModel;
 import com.watchcoins.services.Api;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +33,7 @@ public class CurrenciesFragment extends Fragment {
     private CurrenciesModel data;
     private RecyclerView list;
     private CurrenciesAdapter adapter;
+    private Timer refresh;
 
     public CurrenciesFragment() { }
 
@@ -39,7 +42,14 @@ public class CurrenciesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_currencies, container, false);
         list = view.findViewById(R.id.currencies_list);
-        fetchCurrenciesData();
+        refresh = new Timer();
+        fetchCurrenciesData(true);
+//        refresh.scheduleAtFixedRate(new TimerTask(){
+//            @Override
+//            public void run(){
+//                fetchCurrenciesData(false);
+//            }
+//        },2000,2000);
         return view;
     }
 
@@ -47,7 +57,7 @@ public class CurrenciesFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public void fetchCurrenciesData() {
+    public void fetchCurrenciesData(final Boolean isInitialize) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,9 +68,13 @@ public class CurrenciesFragment extends Fragment {
         call.enqueue(new Callback<CurrenciesModel>() {
             @Override
             public void onResponse(Call<CurrenciesModel> call, Response<CurrenciesModel> response) {
-                data = response.body();
-                Log.i("TIMESTAMP", String.valueOf(data.getTimestamp()));
-                 setupRecycleView();
+                if (isInitialize) {
+                    data = response.body();
+                    setupRecycleView();
+                } else {
+                    data.setData(response.body().getData());
+                    updateRecycleView();
+                }
             }
 
             @Override
@@ -75,8 +89,12 @@ public class CurrenciesFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         list.setLayoutManager(layoutManager);
         list.setHasFixedSize(true);
-        Log.i("BTC VALUE", String.valueOf(data.getData().get(0).getPriceUsd()));
         adapter = new CurrenciesAdapter(data.getData());
         list.setAdapter(adapter);
+    }
+
+    public void updateRecycleView() {
+        Log.i("BTC VALUE", data.getData().get(0).getPriceUsd());
+        adapter.notifyDataSetChanged();
     }
 }

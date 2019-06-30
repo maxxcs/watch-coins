@@ -13,16 +13,17 @@
         android:id="@+id/logo_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:visibility="invisible" />
 
     <TextView
         android:id="@+id/watch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        android:fontFamily="monospace"
         android:text="Watch"
-        android:textColor="@color/fontColor"
-        android:textSize="36sp"
+        android:textColor="@color/colorAccent"
+        android:textSize="48sp"
         android:textStyle="bold"
         android:visibility="invisible" />
 
@@ -30,9 +31,10 @@
         android:id="@+id/coins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="monospace"
         android:text="Coins"
-        android:textColor="@color/fontColor"
-        android:textSize="36sp"
+        android:textColor="@color/colorAccent"
+        android:textSize="48sp"
         android:textStyle="bold"
         android:visibility="invisible" />
 

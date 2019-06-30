@@ -1,6 +1,9 @@
 package com.watchcoins.adapters;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.watchcoins.activities.CurrencyDetailsActivity;
 import com.watchcoins.models.CurrencyModel;
 
 import java.util.List;
@@ -22,7 +26,9 @@ import com.watchcoins.R;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.ViewHolderCurrency> {
 
-    List<CurrencyModel> currencies;
+    private Context context;
+    private List<CurrencyModel> currencies;
+    private Intent details;
 
     public CurrenciesAdapter(List<CurrencyModel> currencies) {
         this.currencies = currencies;
@@ -31,14 +37,18 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Vi
     @NonNull
     @Override
     public CurrenciesAdapter.ViewHolderCurrency onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        context = parent.getContext();
+        details = new Intent(context, CurrencyDetailsActivity.class);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.currency_instance, parent, false);
         ViewHolderCurrency holder = new ViewHolderCurrency(view);
+
         return holder;
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull final CurrenciesAdapter.ViewHolderCurrency holder, int position) {
+    public void onBindViewHolder(@NonNull final CurrenciesAdapter.ViewHolderCurrency holder, final int position) {
         holder.coinName.setText(currencies.get(position).getName());
         holder.coinValue.setText(String.format("U$%1$,.2f", Double.valueOf(currencies.get(position).getPriceUsd())));
         holder.coinChange.setText(String.format("%.2f%%", Double.valueOf(currencies.get(position).getChangePercent24Hr())));
@@ -63,10 +73,10 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Vi
         holder.coinContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("Click", "Click");
+                details.putExtra("CURRENCY_ID", currencies.get(position).getId());
+                context.startActivity(details);
             }
         });
-        //holder.coinContainer.setBackgroundColor();
     }
 
     @Override

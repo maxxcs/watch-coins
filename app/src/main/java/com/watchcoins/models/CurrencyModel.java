@@ -22,7 +22,7 @@ public class CurrencyModel {
     private String supply;
     @SerializedName("maxSupply")
     @Expose
-    private Object maxSupply;
+    private String maxSupply;
     @SerializedName("marketCapUsd")
     @Expose
     private String marketCapUsd;
@@ -79,11 +79,11 @@ public class CurrencyModel {
         this.supply = supply;
     }
 
-    public Object getMaxSupply() {
+    public String getMaxSupply() {
         return maxSupply;
     }
 
-    public void setMaxSupply(Object maxSupply) {
+    public void setMaxSupply(String maxSupply) {
         this.maxSupply = maxSupply;
     }
 
