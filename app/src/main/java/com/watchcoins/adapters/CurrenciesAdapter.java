@@ -1,10 +1,8 @@
 package com.watchcoins.adapters;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +38,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Vi
         context = parent.getContext();
         details = new Intent(context, CurrencyDetailsActivity.class);
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.currency_instance, parent, false);
+        View view = inflater.inflate(R.layout.instance_currency, parent, false);
         ViewHolderCurrency holder = new ViewHolderCurrency(view);
 
         return holder;

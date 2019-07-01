@@ -13,21 +13,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorAccent"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
-            android:paddingTop="2dp"
+            android:paddingTop="3dp"
             android:paddingRight="10dp"
-            android:paddingBottom="2dp">
+            android:paddingBottom="3dp">
 
             <TextView
                 android:id="@+id/read_only_currency_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:text="Cryptocurrency"
                 android:textAlignment="viewStart"
-                android:textColor="@color/fontColor" />
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/read_only_currency_value"
@@ -36,16 +37,16 @@
                 android:layout_weight="1"
                 android:text="Value"
                 android:textAlignment="center"
-                android:textColor="@color/fontColor" />
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/read_only_currency_change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Change (24h)"
+                android:layout_weight="1"
+                android:text="Change "
                 android:textAlignment="textEnd"
-                android:textColor="@color/fontColor" />
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

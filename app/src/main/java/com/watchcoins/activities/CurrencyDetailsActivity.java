@@ -1,5 +1,6 @@
 package com.watchcoins.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,11 +14,14 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.watchcoins.R;
 import com.watchcoins.models.CurrencyDetailsModel;
+import com.watchcoins.models.Bookmark;
 import com.watchcoins.services.Api;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +32,7 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
 
     private String id;
     private Timer refresh;
+    private Realm realm;
     private CurrencyDetailsModel currency;
     private ImageView image;
     private TextView name;
@@ -48,6 +53,7 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_currency_details);
         id = getIntent().getStringExtra("CURRENCY_ID");
         refresh = new Timer();
+        realm = Realm.getDefaultInstance();
 
         image = findViewById(R.id.dt_img);
         name = findViewById(R.id.dt_name);
@@ -61,15 +67,8 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
         maxSupply = findViewById(R.id.dt_max_supply);
         favoriteBtn = findViewById(R.id.dt_favorite_btn);
 
-        isFavorite = false;
-        favoriteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isFavorite) favoriteBtn.setText("Favoritar");
-                else favoriteBtn.setText("Desfavoritar");
-                isFavorite = !isFavorite;
-            }
-        });
+        final Bookmark favorite = realm.where(Bookmark.class).equalTo("id", id).findFirst();
+        isFavorite = favorite != null;
 
         refresh.scheduleAtFixedRate(new TimerTask(){
             @Override
@@ -77,6 +76,8 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
                 fetchData();
             }
         },0,6000);
+
+        favoriteController();
     }
 
     @Override
@@ -135,6 +136,74 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
                             .into(image);
                         }
                 });
+    }
+
+    public void updateFavorite(TextView initial, TextView last) {
+        if (isFavorite) {
+            favoriteBtn.setText("Remove from favorites");
+            initial.setText("Remove ");
+            last.setText(" from your favorites?");
+
+        } else {
+            favoriteBtn.setText("Add to favorites");
+            initial.setText("Add  ");
+            last.setText(" to your favorites?");
+        }
+    }
+
+    public void favoriteController() {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(CurrencyDetailsActivity.this);
+        View dialog = getLayoutInflater().inflate(R.layout.dialog_confirm, null);
+
+        final TextView currencyTxt = dialog.findViewById(R.id.dc_txt_currency);
+        final TextView initialTxt = dialog.findViewById(R.id.dc_txt_content_initial);
+        final TextView lastTxt = dialog.findViewById(R.id.dc_txt_content_last);
+        final Button cancelBtn = dialog.findViewById(R.id.dc_btn_cancel);
+        final Button confirmBtn = dialog.findViewById(R.id.dc_btn_confirm);
+
+        alert.setView(dialog);
+
+        final AlertDialog ad = alert.create();
+
+        updateFavorite(initialTxt, lastTxt);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ad.dismiss();
+            }
+        });
+
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Bookmark favorite = realm.where(Bookmark.class).equalTo("id", id).findFirst();
+                realm.beginTransaction();
+                if (isFavorite) {
+                    favorite.deleteFromRealm();
+                    isFavorite = false;
+                } else {
+                    final Bookmark addFavorite = realm.createObject(Bookmark.class);
+                    addFavorite.setId(id);
+                    isFavorite = true;
+                }
+                updateFavorite(initialTxt, lastTxt);
+                realm.commitTransaction();
+                ad.dismiss();
+            }
+        });
+
+        favoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currency != null) {
+                    currencyTxt.setText(currency.getData().getSymbol());
+                    ad.show();
+                } else {
+                    Toast.makeText(CurrencyDetailsActivity.this, "Fetching data...", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }

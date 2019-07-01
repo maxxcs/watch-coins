@@ -303,7 +303,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#2E2D4D"
-            android:text="Favorite"
             android:textColor="@color/fontColor" />
     </LinearLayout>
 

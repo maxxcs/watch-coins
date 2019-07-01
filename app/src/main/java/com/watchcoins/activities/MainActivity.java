@@ -18,12 +18,13 @@ import com.watchcoins.fragments.CurrenciesFragment;
 import com.watchcoins.fragments.MarketsFragment;
 import com.watchcoins.fragments.FavoritesFragment;
 
+import io.realm.Realm;
+
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView navView;
     private FrameLayout frame;
-    private boolean preventReplace;
     private static final String FRAGMENT_CURRENCIES = "FRAGMENT_CURRENCIES";
     private static final String FRAGMENT_MARKETS = "FRAGMENT_MARKETS";
     private static final String FRAGMENT_FAVORITES = "FRAGMENT_FAVORITES";
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Realm.init(getApplicationContext());
 
         frame = findViewById(R.id.fragment_content);
         navView = findViewById(R.id.nav_view);
