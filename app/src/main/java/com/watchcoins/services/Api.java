@@ -2,9 +2,9 @@ package com.watchcoins.services;
 
 import com.watchcoins.models.CurrenciesModel;
 import com.watchcoins.models.CurrencyDetailsModel;
-import com.watchcoins.models.MarketsModel;
-
-import java.util.List;
+import com.watchcoins.models.Exchange;
+import com.watchcoins.models.ExchangeDetailsModel;
+import com.watchcoins.models.ExchangesModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -20,8 +20,10 @@ public interface Api {
     @GET("assets/{id}")
     Call<CurrencyDetailsModel> getCurrencyDetails(@Path("id") String id);
 
-    @GET("markets")
-    Call<MarketsModel> getMarkets();
+    @GET("exchanges")
+    Call<ExchangesModel> getExchanges();
 
+    @GET("exchanges/{id}")
+    Call<ExchangeDetailsModel> getExchangeDetails(@Path("id") String id);
 
 }

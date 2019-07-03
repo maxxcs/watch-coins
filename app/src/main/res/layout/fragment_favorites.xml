@@ -5,9 +5,55 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FavoritesFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="FAVORITES" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingTop="3dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="3dp">
+
+            <TextView
+                android:id="@+id/txt_currency_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="Cryptocurrency"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_currency_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Value"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_currency_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Change "
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bookmark_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </FrameLayout>

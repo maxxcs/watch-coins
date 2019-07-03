@@ -3,6 +3,7 @@ package com.watchcoins.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.watchcoins.activities.CurrencyDetailsActivity;
-import com.watchcoins.models.CurrencyModel;
+import com.watchcoins.models.Currency;
 
 import java.util.List;
 
@@ -25,10 +27,10 @@ import com.watchcoins.R;
 public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.ViewHolderCurrency> {
 
     private Context context;
-    private List<CurrencyModel> currencies;
+    private List<Currency> currencies;
     private Intent details;
 
-    public CurrenciesAdapter(List<CurrencyModel> currencies) {
+    public CurrenciesAdapter(List<Currency> currencies) {
         this.currencies = currencies;
     }
 
@@ -71,7 +73,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Vi
         holder.coinContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                details.putExtra("CURRENCY_ID", currencies.get(position).getId());
+                details.putExtra("CURRENCY", (new Gson().toJson(currencies.get(position))));
                 context.startActivity(details);
             }
         });

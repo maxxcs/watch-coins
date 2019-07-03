@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.watchcoins.fragments.CurrenciesFragment;
-import com.watchcoins.fragments.MarketsFragment;
+import com.watchcoins.fragments.ExchangesFragment;
 import com.watchcoins.fragments.FavoritesFragment;
 
 import io.realm.Realm;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navView;
     private FrameLayout frame;
     private static final String FRAGMENT_CURRENCIES = "FRAGMENT_CURRENCIES";
-    private static final String FRAGMENT_MARKETS = "FRAGMENT_MARKETS";
+    private static final String FRAGMENT_EXCHANGES = "FRAGMENT_EXCHANGES";
     private static final String FRAGMENT_FAVORITES = "FRAGMENT_FAVORITES";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
                     CurrenciesFragment currencies = new CurrenciesFragment();
                     fragmentController(currencies, FRAGMENT_CURRENCIES);
                     return true;
-                case R.id.navigation_marketplaces:
-                    MarketsFragment markets = new MarketsFragment();
-                    fragmentController(markets, FRAGMENT_MARKETS);
+                case R.id.navigation_exchanges:
+                    ExchangesFragment exchanges = new ExchangesFragment();
+                    fragmentController(exchanges, FRAGMENT_EXCHANGES);
                     return true;
                 case R.id.navigation_favorites:
                     FavoritesFragment favorites = new FavoritesFragment();

@@ -1,5 +1,6 @@
 package com.watchcoins.fragments;
 
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.watchcoins.R;
-import com.watchcoins.adapters.CurrenciesAdapter;
-import com.watchcoins.models.CurrenciesModel;
-import com.watchcoins.models.Currency;
+import com.watchcoins.adapters.ExchangesAdapter;
+import com.watchcoins.models.Exchange;
+import com.watchcoins.models.ExchangesModel;
 import com.watchcoins.services.Api;
 
 import java.util.ArrayList;
@@ -29,27 +30,27 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CurrenciesFragment extends Fragment {
+public class ExchangesFragment extends Fragment {
 
-    private List<Currency> data;
+    private List<Exchange> data;
     private RecyclerView list;
-    private CurrenciesAdapter adapter;
+    private ExchangesAdapter adapter;
     private Timer refresh;
 
-    public CurrenciesFragment() { }
+    public ExchangesFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_currencies, container, false);
-        list = view.findViewById(R.id.currencies_list);
+        View view = inflater.inflate(R.layout.fragment_exchanges, container, false);
+        list = view.findViewById(R.id.exchanges_list);
         refresh = new Timer();
         data = new ArrayList<>();
 
         refresh.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-                fetchCurrenciesData();
+                fetchExchangeData();
             }
         },0,10000);
 
@@ -62,17 +63,17 @@ public class CurrenciesFragment extends Fragment {
         refresh.cancel();
     }
 
-    public void fetchCurrenciesData() {
+    public void fetchExchangeData() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api api = retrofit.create(Api.class);
-        Call<CurrenciesModel> call = api.getCurrencies();
+        Call<ExchangesModel> call = api.getExchanges();
 
-        call.enqueue(new Callback<CurrenciesModel>() {
+        call.enqueue(new Callback<ExchangesModel>() {
             @Override
-            public void onResponse(Call<CurrenciesModel> call, Response<CurrenciesModel> response) {
+            public void onResponse(Call<ExchangesModel> call, Response<ExchangesModel> response) {
                 if (response.body() != null) {
                     data.clear();
                     data.addAll(response.body().getData());
@@ -81,7 +82,7 @@ public class CurrenciesFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<CurrenciesModel> call, Throwable t) {
+            public void onFailure(Call<ExchangesModel> call, Throwable t) {
                 Toast.makeText(getContext(), "Fetch fail", Toast.LENGTH_SHORT).show();
                 Log.i("Fetch fail", t.getMessage());
             }
@@ -93,7 +94,7 @@ public class CurrenciesFragment extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             list.setLayoutManager(layoutManager);
             list.setHasFixedSize(true);
-            adapter = new CurrenciesAdapter(data);
+            adapter = new ExchangesAdapter(data);
             list.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();

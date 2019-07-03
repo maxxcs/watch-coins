@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.CurrencyDetailsActivity"></activity>
-        <activity android:name=".activities.MarketplaceDetailsActivity" />
+        <activity android:name=".activities.ExchangeDetailsActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label="Watch Coins" />

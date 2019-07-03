@@ -5,20 +5,20 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MarketsModel {
+public class ExchangesModel {
 
     @SerializedName("data")
     @Expose
-    private List<MarketplaceModel> data = null;
+    private List<Exchange> data = null;
     @SerializedName("timestamp")
     @Expose
     private BigInteger timestamp;
 
-    public List<MarketplaceModel> getData() {
+    public List<Exchange> getData() {
         return data;
     }
 
-    public void setData(List<MarketplaceModel> data) {
+    public void setData(List<Exchange> data) {
         this.data = data;
     }
 

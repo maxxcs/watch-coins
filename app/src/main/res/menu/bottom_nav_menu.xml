@@ -7,9 +7,9 @@
         android:title="Currencies" />
 
     <item
-        android:id="@+id/navigation_marketplaces"
+        android:id="@+id/navigation_exchanges"
         android:icon="@drawable/ic_store_solid"
-        android:title="Marketplaces" />
+        android:title="Exchanges" />
 
     <item
         android:id="@+id/navigation_favorites"

@@ -3,7 +3,7 @@ package com.watchcoins.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CurrencyModel {
+public class Currency {
 
     @SerializedName("id")
     @Expose

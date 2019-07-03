@@ -11,17 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.watchcoins.R;
 import com.watchcoins.models.CurrencyDetailsModel;
 import com.watchcoins.models.Bookmark;
+import com.watchcoins.models.Currency;
 import com.watchcoins.services.Api;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,10 +31,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CurrencyDetailsActivity extends AppCompatActivity {
 
-    private String id;
     private Timer refresh;
     private Realm realm;
-    private CurrencyDetailsModel currency;
+    private Currency currency;
     private ImageView image;
     private TextView name;
     private TextView symbol;
@@ -51,7 +51,8 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency_details);
-        id = getIntent().getStringExtra("CURRENCY_ID");
+
+        currency = new Gson().fromJson(getIntent().getStringExtra("CURRENCY"), Currency.class);
         refresh = new Timer();
         realm = Realm.getDefaultInstance();
 
@@ -67,7 +68,8 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
         maxSupply = findViewById(R.id.dt_max_supply);
         favoriteBtn = findViewById(R.id.dt_favorite_btn);
 
-        final Bookmark favorite = realm.where(Bookmark.class).equalTo("id", id).findFirst();
+        render(currency);
+        final Bookmark favorite = realm.where(Bookmark.class).equalTo("id", currency.getId()).findFirst();
         isFavorite = favorite != null;
 
         refresh.scheduleAtFixedRate(new TimerTask(){
@@ -92,13 +94,16 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api api = retrofit.create(Api.class);
-        Call<CurrencyDetailsModel> call = api.getCurrencyDetails(id);
+        Call<CurrencyDetailsModel> call = api.getCurrencyDetails(currency.getId());
 
         call.enqueue(new Callback<CurrencyDetailsModel>() {
             @Override
             public void onResponse(Call<CurrencyDetailsModel> call, Response<CurrencyDetailsModel> response) {
-                currency = response.body();
-                render();
+                if (response.body() != null) {
+                    CurrencyDetailsModel currency;
+                    currency = response.body();
+                    render(currency.getData());
+                }
             }
 
             @Override
@@ -109,23 +114,23 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
         });
     }
 
-    public void render() {
-        Log.i("VALUE", currency.getData().getPriceUsd());
-        name.setText(currency.getData().getName());
-        symbol.setText(currency.getData().getSymbol());
-        rank.setText(currency.getData().getRank());
-        price.setText(String.format("U$%1$,.2f", Double.valueOf(currency.getData().getPriceUsd())));
-        change.setText(String.format("%.2f%%", Double.valueOf(currency.getData().getChangePercent24Hr())));
-        marketCap.setText(String.format("U$%1$,.0f", Double.valueOf(currency.getData().getMarketCapUsd())));
-        volume.setText(String.format("U$%1$,.0f", Double.valueOf(currency.getData().getVolumeUsd24Hr())));
-        supply.setText(String.format("%1$,.2f", Double.valueOf(currency.getData().getSupply())));
-        if (currency.getData().getMaxSupply() != null)
-            maxSupply.setText(String.format("%1$,.2f", Double.valueOf(currency.getData().getMaxSupply())));
+    public void render(Currency c) {
+        Log.i("VALUE", c.getPriceUsd());
+        name.setText(c.getName());
+        symbol.setText(c.getSymbol());
+        rank.setText(c.getRank());
+        price.setText(String.format("U$%1$,.2f", Double.valueOf(c.getPriceUsd())));
+        change.setText(String.format("%.2f%%", Double.valueOf(c.getChangePercent24Hr())));
+        marketCap.setText(String.format("U$%1$,.0f", Double.valueOf(c.getMarketCapUsd())));
+        volume.setText(String.format("U$%1$,.0f", Double.valueOf(c.getVolumeUsd24Hr())));
+        supply.setText(String.format("%1$,.2f", Double.valueOf(c.getSupply())));
+        if (c.getMaxSupply() != null)
+            maxSupply.setText(String.format("%1$,.2f", Double.valueOf(c.getMaxSupply())));
         else
             maxSupply.setText("No limit");
 
         Picasso.get()
-                .load("https://static.coincap.io/assets/icons/" + currency.getData().getSymbol().toLowerCase() + "@2x.png")
+                .load("https://static.coincap.io/assets/icons/" + c.getSymbol().toLowerCase() + "@2x.png")
                 .into(image, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() { }
@@ -177,14 +182,14 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Bookmark favorite = realm.where(Bookmark.class).equalTo("id", id).findFirst();
+                final Bookmark favorite = realm.where(Bookmark.class).equalTo("id", currency.getId()).findFirst();
                 realm.beginTransaction();
-                if (isFavorite) {
+                if (isFavorite && favorite != null) {
                     favorite.deleteFromRealm();
                     isFavorite = false;
                 } else {
                     final Bookmark addFavorite = realm.createObject(Bookmark.class);
-                    addFavorite.setId(id);
+                    addFavorite.setId(currency.getId());
                     isFavorite = true;
                 }
                 updateFavorite(initialTxt, lastTxt);
@@ -197,7 +202,7 @@ public class CurrencyDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (currency != null) {
-                    currencyTxt.setText(currency.getData().getSymbol());
+                    currencyTxt.setText(currency.getSymbol());
                     ad.show();
                 } else {
                     Toast.makeText(CurrencyDetailsActivity.this, "Fetching data...", Toast.LENGTH_SHORT).show();

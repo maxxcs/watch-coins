@@ -9,16 +9,16 @@ public class CurrenciesModel {
 
     @SerializedName("data")
     @Expose
-    private List<CurrencyModel> data = null;
+    private List<Currency> data = null;
     @SerializedName("timestamp")
     @Expose
     private BigInteger timestamp;
 
-    public List<CurrencyModel> getData() {
+    public List<Currency> getData() {
         return data;
     }
 
-    public void setData(List<CurrencyModel> data) {
+    public void setData(List<Currency> data) {
         this.data = data;
     }
 

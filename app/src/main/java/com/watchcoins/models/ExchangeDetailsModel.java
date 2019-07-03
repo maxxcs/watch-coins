@@ -5,20 +5,20 @@ import com.google.gson.annotations.SerializedName;
 
 import java.math.BigInteger;
 
-public class CurrencyDetailsModel {
+public class ExchangeDetailsModel {
 
     @SerializedName("data")
     @Expose
-    private Currency data;
+    private Exchange data;
     @SerializedName("timestamp")
     @Expose
     private BigInteger timestamp;
 
-    public Currency getData() {
+    public Exchange getData() {
         return data;
     }
 
-    public void setData(Currency data) {
+    public void setData(Exchange data) {
         this.data = data;
     }
 

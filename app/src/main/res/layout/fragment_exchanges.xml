@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CurrenciesFragment">
+    tools:context=".fragments.ExchangesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,36 +21,35 @@
             android:paddingBottom="3dp">
 
             <TextView
-                android:id="@+id/txt_currency_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_exchange_name"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="Cryptocurrency"
+                android:text="Exchange"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorPrimary" />
 
             <TextView
-                android:id="@+id/txt_currency_value"
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_volume_exchange"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Value"
+                android:text="Volume"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary" />
 
             <TextView
-                android:id="@+id/txt_currency_change"
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_per_volume"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Change "
-                android:textAlignment="textEnd"
+                android:text="Total"
+                android:textAlignment="center"
                 android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/currencies_list"
+            android:id="@+id/exchanges_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
